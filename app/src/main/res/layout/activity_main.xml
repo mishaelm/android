@@ -9,84 +9,85 @@
     android:layoutDirection="ltr"
     android:weightSum="100">
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"></LinearLayout>
-    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="40"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_weight="70"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:weightSum="3">
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"/>
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:padding="20dp"
-            android:paddingLeft="40dp"
-            android:paddingRight="90dp"
+            android:gravity="top"
+            android:padding="10dp"
             android:layout_gravity="center"
             android:weightSum="10">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2">
+                <ImageButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/settings_3_48_050"
+                    android:background="@android:color/transparent"
+                    android:onClick="settingsBtnClicked"
+                    />
+
+            </LinearLayout>
             <Button
                 android:id="@+id/scan_btn"
 
                 android:text="Scan"
                 android:textColor="#FFFFFF"
-                android:textSize="30sp"
+                android:textSize="15dp"
                 android:textAllCaps="false"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_weight="1.1"
                 android:background="@drawable/buttonshape"
                 android:shadowColor="#A8A8A8"
-                android:shadowDx="0"
-                android:shadowDy="0"
                 android:shadowRadius="5"
                 android:onClick="scanBtnClicked"
                 />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-            <Button
-                android:id="@+id/attack_btn"
-                android:textAllCaps="false"
-                android:text="Attack!"
-                android:textColor="#FFFFFF"
-                android:textSize="30sp"
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0dp"-->
+                <!--android:layout_weight="1"/>-->
+            <!--<Button-->
+                <!--android:id="@+id/attack_btn"-->
+                <!--android:textAllCaps="false"-->
+                <!--android:text="Attack!"-->
+                <!--android:textColor="#FFFFFF"-->
+                <!--android:textSize="15dp"-->
 
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:background="@drawable/buttonshape"
-                android:shadowColor="#A8A8A8"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="5"
-                android:onClick="attackBtnClicked"
-                />
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0dp"-->
+                <!--android:layout_weight="1.5"-->
+                <!--android:background="@drawable/buttonshape"-->
+                <!--android:shadowColor="#A8A8A8"-->
+                <!--android:shadowDx="0"-->
+                <!--android:shadowDy="0"-->
+                <!--android:shadowRadius="5"-->
+                <!--android:onClick="attackBtnClicked"-->
+                <!--/>-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
             <Button
                 android:id="@+id/reset_btn"
-
                 android:text="Reset"
                 android:textColor="#FFFFFF"
-                android:textSize="30sp"
+                android:textSize="15dp"
                 android:textAllCaps="false"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_weight="1.1"
                 android:background="@drawable/buttonshape"
                 android:shadowColor="#A8A8A8"
                 android:shadowDx="0"
@@ -99,20 +100,20 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"></LinearLayout>
+            android:layout_weight="0.1"></LinearLayout>
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="20dp"
+            android:layout_weight="2"
+            android:padding="10dp"
             android:weightSum="10">
             <TextView
                 android:gravity="center_vertical|left"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:textSize="30dp"
                 android:layout_weight="2"
+                android:textSize="15dp"
                 android:textColor="#E86417"
                 android:text="Available Devices:"/>
             <ListView
@@ -120,21 +121,84 @@
                 android:background="#CFCBA9"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="7"/>
+                android:layout_weight="7.5"/>
 
         </LinearLayout>
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="30"
+        android:weightSum="2">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:weightSum="5">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:layout_weight="1.5"
+                android:gravity="center"
+                android:weightSum="7">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:text="Attack:"
+                    android:textSize="15dp"
+                    android:textColor="#E86417"/>
+                <ImageButton
+                    android:id="@+id/attack_indicator"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:background="@android:color/transparent"
+                    android:onClick="attackBtnClicked"
+                    android:src="@drawable/btn_off3"/>
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.356"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.199" />
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:gravity="left"
+            android:weightSum="6">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"
+                android:text="Server Response:"
+                android:textSize="15dp"
+                android:textColor="#E86417"/>
+            <TextView
+                android:id="@+id/server_response_text"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:background="#CFCBA9"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 
 </LinearLayout>
