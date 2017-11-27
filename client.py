@@ -32,8 +32,8 @@ while 1:
     print 'Connected with ' + addr[0] + ':' + str(addr[1])
     #now keep talking with the client
     print "trying to receive data"
-    data = conn.recv(1024)
-    conn.sendall(data)
+    #data = conn.recv(1024)
+    conn.sendall("you bastered")
  
 conn.close()
 
