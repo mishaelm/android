@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@drawable/bcgrd075"
+    android:layoutDirection="ltr"
+    android:weightSum="10">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="5"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:weightSum="5">
+        <TextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textColor="#E86417"
+            android:textSize="20dp"
+            android:text="server IP:"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textColor="#E86417"
+            android:textSize="20dp"
+            android:text="PORT:"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="5"
+        android:layout_height="match_parent"
+        android:gravity="left|top"
+        android:orientation="vertical"
+        android:weightSum="5">
+        <EditText
+            android:id="@+id/dialog_ip_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textColor="#E86417"
+            android:textColorHint="@android:color/darker_gray"
+            android:inputType="numberDecimal"
+            android:hint="IP"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <EditText
+            android:id="@+id/dialog_port_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:textColor="#E86417"
+            android:shadowColor="#E86417"
+            android:textColorHighlight="#E86417"
+            android:textColorHint="@android:color/darker_gray"
+            android:textColorLink="#E86417"
+            android:hint="Port"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1.4"/>
+        <Button
+            android:id="@+id/dialog_submit_btn"
+            android:textColor="#FFFFFF"
+            android:textSize="15dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:textAllCaps="false"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowRadius="5"
+            android:layout_width="80dp"
+            android:layout_gravity="right"
+            android:layout_height="0dp"
+            android:text="Submit"
+            android:layout_weight="0.6"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
