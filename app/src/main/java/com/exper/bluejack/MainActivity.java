@@ -5,17 +5,22 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -69,12 +74,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-//        IntentFilter filter = new IntentFilter();
-//        filter.addAction(BluetoothDevice.ACTION_FOUND);
-//        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-//        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-//
-//        registerReceiver(mReceiver, filter);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BluetoothDevice.ACTION_FOUND);
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+
+        registerReceiver(mReceiver, filter);
 
 
 
@@ -143,6 +148,35 @@ public class MainActivity extends AppCompatActivity {
         if (!mBluetoothAdapter.isEnabled()){
             Toast.makeText(this, "Enable bluetooth before this operation", Toast.LENGTH_LONG).show();
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {  // Only ask for these permissions on runtime when running Android 6.0 or higher
+            switch (ContextCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                case PackageManager.PERMISSION_DENIED:
+                    Log.v(TAG, "scanBtnClicked -->pemission denied");
+                    ((TextView) new AlertDialog.Builder(this)
+                            .setTitle("Runtime Permissions up ahead")
+                            .setMessage(Html.fromHtml("<p>To find nearby bluetooth devices please click \"Allow\" on the runtime permissions popup.</p>" +
+                                    "<p>For more info see <a href=\"http://developer.android.com/about/versions/marshmallow/android-6.0-changes.html#behavior-hardware-id\">here</a>.</p>"))
+                            .setNeutralButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (ContextCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                        ActivityCompat.requestPermissions(MainActivity.this,
+                                                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},1);
+                                    }
+                                }
+                            })
+                            .show()
+                            .findViewById(android.R.id.message))
+                            .setMovementMethod(LinkMovementMethod.getInstance());       // Make the link clickable. Needs to be called after show(), in order to generate hyperlinks
+                    break;
+                case PackageManager.PERMISSION_GRANTED:
+                    break;
+            }
+        }
+
+
+
+
         mBluetoothAdapter.startDiscovery();
         ListView list = findViewById(R.id.lisView);
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
@@ -155,6 +189,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void unSelectListOptions(){
         listView.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item_layout, mDeviceList));
+    }
+
+
+    private void updateList(){
+        listView.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item_layout, mDeviceList));
+
     }
 
 
@@ -199,11 +239,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setServerResponse(String response){
-        TextView textView =  findViewById(R.id.server_response_text);
-        textView.setText(response);
-    }
-
 
     static class Run implements Runnable{
         static boolean running = false;
@@ -216,7 +251,9 @@ public class MainActivity extends AppCompatActivity {
             try{
                 Log.v(TAG,"creating socket" );
                 Socket socket = new Socket(IP, PORT);
-//                socket.setSoTimeout(10000);
+                socket.setSoTimeout(5000);
+                Log.v(TAG,"timeout was set" );
+//                socket.setSoT  imeout(10000);
                 if (socket.isConnected()){
                     Log.v(TAG, "is connected");
                 }
@@ -283,26 +320,30 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-//    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//
-//            final String action = intent.getAction();
-//
-//            if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
-//                Log.v(TAG, "starting discovery");
-//                //discovery starts, we can show progress dialog or perform other tasks
-//            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-//                Log.v(TAG, "finished discovery");
-//                //discovery finishes, dismis progress dialog
-//            } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-//                //bluetooth device found
-//                Log.v(TAG, "found bluetooth device");
-//                Log.v(TAG, "found bluetooth device");
-//                Log.v(TAG, "found bluetooth device");
-//                Log.v(TAG, "found bluetooth device");
-//
-//            }
-//        }
-//    };
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            final String action = intent.getAction();
+
+            if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
+                Log.v(TAG, "starting discovery");
+                //discovery starts, we can show progress dialog or perform other tasks
+            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+                Log.v(TAG, "finished discovery");
+                //discovery finishes, dismis progress dialog
+            } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                mDeviceList.add(device.getName());
+
+                //bluetooth device found
+                Log.v(TAG, "found bluetooth device");
+                Log.v(TAG, "found bluetooth device");
+                Log.v(TAG, "found bluetooth device");
+                Log.v(TAG, "found bluetooth device");
+                updateList();
+
+            }
+        }
+    };
 }
